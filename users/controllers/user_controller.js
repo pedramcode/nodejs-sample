@@ -1,12 +1,9 @@
 const {User, Otp} = require("../models")
-const {$response} = require("../../utils")
+const {$response, generate_access_token} = require("../../utils")
 const settings = require("../../settings")
-const jwt = require('jsonwebtoken')
 
 const user_controller = {
     register: async (req, res) => {
-        await User.deleteMany()
-        await Otp.deleteMany()
         const data = req.body
         const cond = "email" in data && "password" in data && "username" in data
         if(!cond){
@@ -87,12 +84,7 @@ const user_controller = {
             })
         }
 
-        const _now = new Date()
-        const token = jwt.sign({
-            id: user._id,
-            is_admin: user.is_admin,
-            created: _now.getTime(),
-        }, settings.SECRET_KEY)
+        const token = generate_access_token(user)
 
         return $response(res, 200, {
             success: true,

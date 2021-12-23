@@ -1,4 +1,6 @@
 const crypto = require("crypto")
+const settings = require("./settings")
+const jwt = require('jsonwebtoken')
 
 
 const hasher = (data) => {
@@ -22,8 +24,19 @@ const token = (length=10)=>{
     return b.join("");
 }
 
+const generate_access_token = (user) => {
+    const _now = new Date()
+    const token = jwt.sign({
+        id: user._id,
+        is_admin: user.is_admin,
+        created: _now.getTime(),
+    }, settings.SECRET_KEY)
+    return token
+}
+
 module.exports = {
     hasher,
     $response,
     token,
+    generate_access_token,
 }

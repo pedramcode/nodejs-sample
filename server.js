@@ -15,7 +15,9 @@ mongoose.connect(connection).then(()=>{
 })
 
 const user_router = require("./users/router")
+const blog_router = require("./blog/router")
 app.use(user_router)
+app.use(blog_router)
 
 app.listen(settings.PORT, settings.HOST, ()=>{
     console.info(`Server is running`)
