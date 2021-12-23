@@ -3,6 +3,8 @@ const cors = require("cors")
 const app = express()
 const settings = require("./settings")
 const mongoose = require("mongoose")
+const docs = require("./docs")
+const swaggerUI = require("swagger-ui-express")
 
 app.use(cors())
 app.use(express.json())
@@ -14,6 +16,7 @@ mongoose.connect(connection).then(()=>{
     console.error(`Connecting to database failed: ${e}`)
 })
 
+app.use('/docs',swaggerUI.serve,swaggerUI.setup(docs));
 const user_router = require("./users/router")
 const blog_router = require("./blog/router")
 app.use(user_router)

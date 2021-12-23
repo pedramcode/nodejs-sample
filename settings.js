@@ -1,6 +1,6 @@
 const settings = {
     DEBUG: true,
-    HOST: "0.0.0.0",
+    HOST: "127.0.0.1",
     PORT: 8080,
     DATABASE: {
         HOST: "mycluster.nxxtx.mongodb.net",
